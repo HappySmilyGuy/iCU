@@ -27,4 +27,5 @@
     <string name="rpc_add_ally">addAlly</string>
     <string name="my_code">my_code</string>
     <string name="friend_code">friend_code</string>
+    <string name="title_activity_registration">Registration</string>
 </resources>
