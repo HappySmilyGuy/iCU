@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import java.util.logging.Logger;
 
 import android.widget.TextView;
 
@@ -30,6 +31,9 @@ public class Status extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+    private static final String STATUS_NAME = "splash.png";
+    private static final Logger logger = Logger.getLogger(Status.class.toString());
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -38,6 +42,15 @@ public class Status extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Display splash screen
+        try {
+            logger.info("Showing splash screen " + STATUS_NAME);
+            setContentView(R.layout.splash_screen);
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e) {
+            logger.info("Splash screen display interrupted" + STATUS_NAME);
+        }
         setContentView(R.layout.activity_status);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
