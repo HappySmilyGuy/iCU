@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/content_allies_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,54 +15,38 @@
     tools:showIn="@layout/activity_allies_screen"
     android:background="@android:color/black">
 
-    <TextView
-        android:text="Allies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:id="@+id/textView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="@android:color/white"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/layout_bg"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/AllyTemplate">
+        android:layout_height="wrap_content">
 
         <TextView
-            android:text="Name1"
+            android:text="Allies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/AllyNameTemplate"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:layout_marginTop="14dp"
+            android:id="@+id/textView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="@android:color/white"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:textColor="@android:color/black" />
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1" />
 
         <ImageButton
-            app:srcCompat="@drawable/phone"
-            android:id="@+id/imageButton"
+            app:srcCompat="@drawable/plus_white"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:layout_marginRight="7dp"
-            android:layout_marginEnd="7dp"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_height="43dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+            android:layout_alignParentEnd="true"
+            android:id="@+id/addAllyButton"
+            android:layout_marginLeft="30dp"
+            android:layout_width="41dp"
+            android:cropToPadding="true"
+            android:layout_marginTop="24dp"
+            android:background="@android:color/transparent" />
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

@@ -17,8 +17,6 @@ public class AddAlly extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ally);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         code = generateCode();
         TextView t=(TextView)findViewById(R.id.userCode);
         t.setText(code);
