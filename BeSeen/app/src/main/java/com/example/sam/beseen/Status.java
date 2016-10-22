@@ -1,7 +1,5 @@
 package com.example.sam.beseen;
 
-import android.content.Intent;
-import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import java.util.logging.Logger;
 
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class Status extends AppCompatActivity {
@@ -34,23 +31,8 @@ public class Status extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    ImageButton.OnClickListener imageButtonListener =
-            new ImageButton.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent goToAddAllyPage = new Intent(getApplicationContext(), AddAlly.class);
-                    startActivity(goToAddAllyPage);
-                }
-            };
-
-    ImageButton.OnClickListener imageButton2Listener =
-            new ImageButton.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent goToAddAllyPage = new Intent(getApplicationContext(), AlliesScreen.class);
-                    startActivity(goToAddAllyPage);
-                }
-            };
+    private static final String STATUS_NAME = "splash.png";
+    private static final Logger logger = Logger.getLogger(Status.class.toString());
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -60,6 +42,15 @@ public class Status extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Display splash screen
+        try {
+            logger.info("Showing splash screen " + STATUS_NAME);
+            setContentView(R.layout.splash_screen);
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e) {
+            logger.info("Splash screen display interrupted" + STATUS_NAME);
+        }
         setContentView(R.layout.activity_status);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,14 +63,15 @@ public class Status extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        setContentView(R.layout.fragment_status);
-        final ImageButton button = (ImageButton) findViewById(R.id.imageButton2);
 
-        button.setOnClickListener(imageButtonListener);
-
-        final ImageButton button2 = (ImageButton) findViewById(R.id.imageButton3);
-
-        button2.setOnClickListener(imageButton2Listener);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
     }
 
@@ -176,6 +168,5 @@ public class Status extends AppCompatActivity {
             }
             return null;
         }
-
     }
 }
