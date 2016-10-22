@@ -18,6 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AddAlly"
+            android:label="@string/title_activity_add_ally"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AlliesScreen"
+            android:label="@string/title_activity_allies_screen"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
