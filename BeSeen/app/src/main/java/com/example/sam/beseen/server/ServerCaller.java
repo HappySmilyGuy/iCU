@@ -26,10 +26,10 @@ public class ServerCaller {
         messageServer(context.getResources().getString(R.string.rpc_register),
                 "?" + context.getResources().getString(R.string.email_param) + "=" + email
                 + "&" + context.getResources().getString(R.string.password_param) + "=" + password
-                + "&" + context.getResources().getString(R.string.phone_param) + "=" + phone);
+                + "&" + context.getResources().getString(R.string.phone_no_param) + "=" + phone);
     }
-    public void addFriend(String my_code, String their_code){
-        messageServer(context.getResources().getString(R.string.rpc_add_friend),
+    public void addAlly(String my_code, String their_code){
+        messageServer(context.getResources().getString(R.string.rpc_add_ally),
                 "?" + context.getResources().getString(R.string.my_code) + "=" + my_code
                 + "&" + context.getResources().getString(R.string.friend_code) + "=" + their_code);
     }

@@ -6,15 +6,15 @@
     <string name="server">25.82.18.242</string>
     <string name="port">8080</string>
 
-    <string name="rpc_change_state">change_state</string>
+    <string name="rpc_change_state">changeState</string>
     <string name="email_param">email</string>
     <string name="state_param">state</string>
 
     <string name="rpc_register">register</string>
-    <string name="password_param">password</string>
-    <string name="phone_param">phone_no</string>
+    <string name="password_param">passwordHash</string>
+    <string name="phone_no_param">phoneNumber</string>
 
-    <string name="rpc_add_friend">add_friend</string>
+    <string name="rpc_add_ally">addAlly</string>
     <string name="my_code">my_code</string>
     <string name="friend_code">friend_code</string>
 </resources>
