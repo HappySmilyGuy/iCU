@@ -34,11 +34,20 @@ public class Status extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    ImageButton.OnClickListener imageButton2Listener =
+    ImageButton.OnClickListener imageButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent goToAddAllyPage = new Intent(getApplicationContext(), AddAlly.class);
+                    startActivity(goToAddAllyPage);
+                }
+            };
+
+    ImageButton.OnClickListener imageButton2Listener =
+            new ImageButton.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToAddAllyPage = new Intent(getApplicationContext(), AlliesScreen.class);
                     startActivity(goToAddAllyPage);
                 }
             };
@@ -66,8 +75,11 @@ public class Status extends AppCompatActivity {
         setContentView(R.layout.fragment_status);
         final ImageButton button = (ImageButton) findViewById(R.id.imageButton2);
 
-        button.setOnClickListener(imageButton2Listener);
+        button.setOnClickListener(imageButtonListener);
 
+        final ImageButton button2 = (ImageButton) findViewById(R.id.imageButton3);
+
+        button2.setOnClickListener(imageButton2Listener);
 
     }
 
