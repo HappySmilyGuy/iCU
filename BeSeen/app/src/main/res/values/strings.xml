@@ -2,4 +2,11 @@
     <string name="app_name">BeSeen</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_add_ally">AddAlly</string>
+    <string name="nameInput">Name</string>
+    <string name="add_ally_title">Add Ally</string>
+    <string name="give_ally_this_code">Give ally this code:</string>
+    <string name="my_code">1234ABC</string>
+    <string name="enter_their_code">Enter their code here:</string>
+    <string name="add_button_text">Add</string>
 </resources>
