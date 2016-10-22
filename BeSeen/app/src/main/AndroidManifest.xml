@@ -27,5 +27,5 @@
             android:label="@string/title_activity_allies_screen"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

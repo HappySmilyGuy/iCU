@@ -49,7 +49,7 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="@string/my_code"
+        android:text="@string/my_code_placholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/userCode"
