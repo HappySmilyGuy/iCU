@@ -32,7 +32,8 @@
         android:background="@drawable/layout_bg"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/AllyTemplate">
 
         <TextView
             android:text="Name1"
