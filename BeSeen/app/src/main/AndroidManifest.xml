@@ -25,7 +25,13 @@
         <activity
             android:name=".AlliesScreen"
             android:label="@string/title_activity_allies_screen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <service
+            android:name=".notification.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
