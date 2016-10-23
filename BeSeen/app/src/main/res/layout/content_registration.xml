@@ -20,7 +20,7 @@
         android:inputType="textPassword"
         android:text=""
         android:ems="10"
-        android:id="@+id/editText6"
+        android:id="@+id/reenterPassword"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:hint="Confirm Password"
         android:background="@android:color/background_light"
@@ -48,25 +48,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:text=""
-        android:ems="10"
-        android:id="@+id/enterEmail"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:hint="Email"
-        android:background="@android:color/background_light"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:layout_marginTop="21dp"
-        android:layout_below="@+id/addAllyTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:text=""
         android:ems="10"
@@ -79,7 +60,7 @@
         android:paddingRight="20dp"
         android:paddingTop="10dp"
         android:layout_marginTop="23dp"
-        android:layout_below="@+id/enterEmail"
+        android:layout_below="@+id/enterAllyName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -98,32 +79,40 @@
         android:paddingRight="20dp"
         android:paddingTop="10dp"
         android:layout_marginTop="26dp"
-        android:layout_below="@+id/editText6"
+        android:layout_below="@+id/reenterPassword"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
-        android:layout_above="@+id/addAllyButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/editText7" />
 
     <Button
         android:text="Register"
         android:layout_height="wrap_content"
-        android:id="@+id/addAllyButton"
+        android:id="@+id/registerButton"
         android:layout_width="160dp"
         android:layout_marginRight="7dp"
         android:layout_marginEnd="7dp"
-        android:layout_marginBottom="43dp"
+        android:layout_marginBottom="45dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/enterAllyName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:hint="Email"
+        android:background="@android:color/background_light"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/addAllyTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

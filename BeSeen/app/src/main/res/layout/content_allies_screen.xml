@@ -41,7 +41,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:id="@+id/addAllyButton"
+            android:id="@+id/registerButton"
             android:layout_marginLeft="30dp"
             android:layout_width="41dp"
             android:cropToPadding="true"
