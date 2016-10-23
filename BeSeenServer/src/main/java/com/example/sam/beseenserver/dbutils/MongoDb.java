@@ -70,7 +70,7 @@ public class MongoDb {
 
     public boolean changeState(String email, String state) {
         UpdateResult result = userCollection.updateOne(eq(EMAIL_FIELD_NAME, email), set(STATE_FIELD_NAME, state));
-        return result.wasAcknowledged();
+        return updateWasSuccess(result);
     }
 
     public List<String> addAlly(String email, String code, String allyCode) {
@@ -111,15 +111,21 @@ public class MongoDb {
     public List<String> getAllyTokens(String email) {
         List<String> allyTokens = new ArrayList<>();
         List<String> alliesEmails = getAllyEmails(email);
-        for (String allyEmail : alliesEmails) {
-            allyTokens.add(getToken(allyEmail));
+        if (alliesEmails != null) {
+            for (String allyEmail : alliesEmails) {
+                allyTokens.add(getToken(allyEmail));
+            }
+            return allyTokens;
         }
-        return allyTokens;
+        return null;
     }
 
     private List<String> getAllyEmails(String email) {
         Document userDoc = getUserDocument(email);
-        return (List<String>) userDoc.get(ALLIES_FIELD_NAME);
+        if (userDoc != null) {
+            return (List<String>) userDoc.get(ALLIES_FIELD_NAME);
+        }
+        return null;
     }
 
     private Document getUserDocument(String email) {
@@ -141,4 +147,15 @@ public class MongoDb {
         }
         return persons;
     }
+
+    public boolean updateToken(String email, String token) {
+        UpdateResult result = userCollection.updateOne(eq(EMAIL_FIELD_NAME, email), set(APP_TOKEN_FIELD_NAME, token));
+        return updateWasSuccess(result);
+    }
+
+    private boolean updateWasSuccess(UpdateResult result) {
+        return result.wasAcknowledged() && result.getMatchedCount() > 0 && result.getModifiedCount() > 0;
+    }
+
+
 }

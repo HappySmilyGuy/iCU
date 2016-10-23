@@ -3,6 +3,7 @@ package com.example.sam.beseen.server;
 import android.os.AsyncTask;
 
 import com.example.sam.beseen.dataobjects.TLState;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -22,25 +23,37 @@ public class ServerCaller{
     private final static String RPC_REGISTER = "register";
     private final static String PARAM_PASSWORD = "passwordHash";
     private final static String PARAM_PHONE_NUMBER = "phoneNumber";
+    private final static String PARAM_APP_TOKEN = "token";
     private final static String RPC_ADD_ALLY = "addAlly";
     private final static String PARAM_MY_CODE = "my_code";
     private final static String PARAM_FRIEND_CODE = "friend_code";
+    private final static String RPC_UPDATE_TOKEN = "updateToken";
+
+    private static ServerCaller instance = null;
 
     public void changeState(String email, TLState state){
         new messageServer().execute(createURL(RPC_CHANGE_STATE, "?" + PARAM_EMAIL + "=" + email
                                     + "&" + PARAM_STATE + "=" + state));
     }
     public void register(String email, String password, String phone){
+        String tokenId = FirebaseInstanceId.getInstance().getId();
         new messageServer().execute(createURL(RPC_REGISTER,
                 "?" + PARAM_EMAIL + "=" + email
                 + "&" + PARAM_PASSWORD + "=" + password
-                + "&" + PARAM_PHONE_NUMBER + "=" + phone));
+                + "&" + PARAM_PHONE_NUMBER + "=" + phone
+                + "&" + PARAM_APP_TOKEN + "=" + tokenId));
     }
-    public void addAlly(String email, String my_code, String their_code){
+    public void addAlly(String email, String myCode, String theirCode){
         new messageServer().execute(createURL(RPC_ADD_ALLY,
                 "?" + PARAM_EMAIL + "=" + email
-                + "&" + PARAM_MY_CODE + "=" + my_code
-                + "&" + PARAM_FRIEND_CODE + "=" + their_code));
+                + "&" + PARAM_MY_CODE + "=" + myCode
+                + "&" + PARAM_FRIEND_CODE + "=" + theirCode));
+    }
+
+    public void updateToken(String email, String token) {
+        new messageServer().execute(createURL(RPC_UPDATE_TOKEN,
+                "?" + PARAM_EMAIL + "=" + email
+                + "&" + PARAM_APP_TOKEN + "=" + token));
     }
 
     private class messageServer extends AsyncTask<URL, Integer, Boolean>
@@ -51,7 +64,7 @@ public class ServerCaller{
             try
             {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
+                int rc = connection.getResponseCode();
             }
             catch (MalformedURLException e){
                 return false;
@@ -73,5 +86,12 @@ public class ServerCaller{
         {
             return null;
         }
+    }
+
+    public static ServerCaller getInstance() {
+        if (instance != null) {
+            return instance;
+        }
+        return new ServerCaller();
     }
 }

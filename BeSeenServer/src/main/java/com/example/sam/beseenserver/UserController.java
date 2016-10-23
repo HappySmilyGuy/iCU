@@ -67,4 +67,12 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping("/updateToken")
+    public ResponseEntity<String> updateToken(@Email String email, String token) {
+        if(mongoDb.updateToken(email, token)) {
+            return new ResponseEntity<>("Token updated", HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }

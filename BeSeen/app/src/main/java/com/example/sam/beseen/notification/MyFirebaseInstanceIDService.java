@@ -2,6 +2,7 @@ package com.example.sam.beseen.notification;
 
 import android.util.Log;
 
+import com.example.sam.beseen.server.ServerCaller;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -9,6 +10,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private static final String TAG = "MyFirebaseIIDService";
+    public static final String LOCAL_DATA = "LocalDataStore";
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -38,6 +40,9 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send token to your app server.
+        String username = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE).getString("username", null);
+        if (username != null) {
+            ServerCaller.getInstance().updateToken(username, token);
+        }
     }
 }

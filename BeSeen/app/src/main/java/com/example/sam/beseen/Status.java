@@ -38,7 +38,7 @@ public class Status extends AppCompatActivity {
                 }
             };
 
-    private final ServerCaller serverCaller = new ServerCaller();
+    private final ServerCaller serverCaller = ServerCaller.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
