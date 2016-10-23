@@ -23,8 +23,8 @@
         tools:text="Add Ally"
         android:textColor="@android:color/white"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/addAllyButton"
-        android:layout_alignStart="@+id/addAllyButton" />
+        android:layout_alignLeft="@+id/registerButton"
+        android:layout_alignStart="@+id/registerButton" />
 
     <TextView
         android:text="@string/give_ally_this_code"
@@ -34,7 +34,7 @@
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_marginTop="11dp"
-        android:layout_below="@+id/enterName"
+        android:layout_below="@+id/enterAllyName"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -47,6 +47,35 @@
         android:layout_width="wrap_content"
         android:layout_below="@+id/userCode"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/add_button_text"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerButton"
+        android:layout_marginTop="19dp"
+        android:layout_width="160dp"
+        android:layout_below="@+id/allyCode"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/enterAllyName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="13dp"
+        android:hint="@string/nameInput"
+        android:background="@android:color/background_light"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/addAllyTitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:text="@string/my_code_placeholder"
@@ -79,34 +108,5 @@
         android:layout_width="180dp"
         android:layout_below="@+id/giveCodeLabel"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/add_button_text"
-        android:layout_height="wrap_content"
-        android:id="@+id/addAllyButton"
-        android:layout_marginTop="19dp"
-        android:layout_width="160dp"
-        android:layout_below="@+id/allyCode"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text=""
-        android:ems="10"
-        android:id="@+id/enterName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@android:color/black"
-        android:layout_marginTop="13dp"
-        android:hint="@string/nameInput"
-        android:background="@android:color/background_light"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:layout_below="@+id/addAllyTitle"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

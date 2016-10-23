@@ -1,4 +1,4 @@
-package com.example.sam.beseenserver.utils;
+package com.example.sam.beseenserver.dbutils;
 
 /**
  * Created by PATRICK JOVAN on 22/10/2016.

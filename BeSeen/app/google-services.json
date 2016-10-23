@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "114680733238",
+    "firebase_url": "https://beseen-147219.firebaseio.com",
+    "project_id": "beseen-147219",
+    "storage_bucket": "beseen-147219.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114680733238:android:a1c57fd6fe4d4038",
+        "android_client_info": {
+          "package_name": "com.example.sam.beseen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114680733238-sguhtq3tkbc9kep3q454u35tdtttmdl8.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "114680733238-sofoke1lhdp216v2tuihj3bjrehhbdur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC90qm3Wx4sQxMz63nmTjKKikYFooJF3iw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

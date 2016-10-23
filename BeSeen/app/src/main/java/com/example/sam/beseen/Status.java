@@ -1,9 +1,9 @@
 package com.example.sam.beseen;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import android.widget.ImageButton;
@@ -21,8 +21,7 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Log.d("Eddie's messages", "clicked red");
-                    //serverCaller.changeState("default@email.com", TLState.RED);
+                    serverCaller.changeState("default@email.com", TLState.RED);
                     // TODO change all images to off and yellow to on.
 
                     yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
@@ -38,8 +37,7 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Eddie's messages", "clicked yellow");
-                   // serverCaller.changeState("default@email.com", TLState.YELLOW);
+                    serverCaller.changeState("default@email.com", TLState.YELLOW);
                     // TODO change all images to off and yellow to on.
 
                     yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
@@ -56,8 +54,7 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Eddie's messages", "clicked green");
-                   // serverCaller.changeState("default@email.com", TLState.GREEN);
+                    serverCaller.changeState("default@email.com", TLState.GREEN);
                     // TODO change all images to off and yellow to on.
 
                     yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
@@ -70,13 +67,22 @@ public class Status extends AppCompatActivity {
                 }
             };
 
-    private final ServerCaller serverCaller = new ServerCaller();
+    ImageButton.OnClickListener nextPageButtonListener =
+            new ImageButton.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToAlliesScreenPage = new Intent(getApplicationContext(), AlliesScreen.class);
+                    startActivity(goToAlliesScreenPage);
+                }
+            };
+
+    private final ServerCaller serverCaller = ServerCaller.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_status);
+        setContentView(R.layout.fragment_status);
 
         try {
             final ImageButton redLightButton = (ImageButton) findViewById(R.id.redLightButton);
@@ -89,7 +95,9 @@ public class Status extends AppCompatActivity {
             greenLightButton.setOnClickListener(greenLightButtonListener);
         }
         catch(NullPointerException e){
-            Log.d("Eddie's messages", "ImageButton catch");
         }
+
+        final ImageButton button = (ImageButton) findViewById(R.id.nextPage);
+        button.setOnClickListener(nextPageButtonListener);
     }
 }
