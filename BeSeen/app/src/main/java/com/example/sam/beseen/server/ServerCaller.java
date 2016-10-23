@@ -74,6 +74,13 @@ public class ServerCaller{
             }
             return true;
         }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result) {
+
+            }
+        }
     }
 
     private URL createURL(String rpc_name, String variables)

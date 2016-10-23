@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import com.example.sam.beseen.server.ServerCaller;
 
 public class Registration extends AppCompatActivity {
 
@@ -14,7 +15,8 @@ public class Registration extends AppCompatActivity {
     String password;
     String password2;
     String phone;
-    public static final String LOCAL_DATA = "LocalDataStore";
+    private static final String LOCAL_DATA = "LocalDataStore";
+    private final ServerCaller serverCaller = ServerCaller.getInstance();
 
     Button.OnClickListener buttonListener =
             new ImageButton.OnClickListener() {
@@ -25,8 +27,9 @@ public class Registration extends AppCompatActivity {
                     password2 = ((EditText)findViewById(R.id.reenterPassword)).getText().toString();
                     phone = ((EditText)findViewById(R.id.phoneNumber)).getText().toString();
 
-                    if(!email.equals(null) && password.equals(password2) && !phone.equals(null)) {
-                        //send email, password, phone to db with username
+                    if(email != null && password.equals(password2) && phone != null) {
+                        serverCaller.register(email, password, phone);
+                        saveUsername(email);
                     } else {
 
                     }
@@ -49,7 +52,7 @@ public class Registration extends AppCompatActivity {
     public void saveUsername(String userName) {
         SharedPreferences.Editor editor = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE).edit();
         editor.putString("username", userName);
-        editor.commit();
+        editor.apply();
     }
 
 }
