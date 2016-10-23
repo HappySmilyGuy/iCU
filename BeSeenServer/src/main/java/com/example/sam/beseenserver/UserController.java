@@ -45,12 +45,12 @@ public class UserController {
     }
 
     @RequestMapping("/addAlly")
-    public ResponseEntity<String> addAlly(@Email String requestEmail, String myCode, String theirCode) {
-        List<String> emailPair = mongoDb.addAlly(requestEmail, myCode, theirCode);
+    public ResponseEntity<String> addAlly(@Email String email, String myCode, String allyCode) {
+        List<String> emailPair = mongoDb.addAlly(email, myCode, allyCode);
         if (!emailPair.isEmpty()) {
             List<String> tokens = new ArrayList<>();
-            for (String email : emailPair) {
-                String token = mongoDb.getToken(email);
+            for (String emailFromPair : emailPair) {
+                String token = mongoDb.getToken(emailFromPair);
                 tokens.add(token);
             }
             notificationService.sendNotifications(notificationCreator.createAllySuccessMessages(tokens));

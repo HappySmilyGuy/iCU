@@ -36,8 +36,8 @@ public class ServerCaller{
     private final static String PARAM_PHONE_NUMBER = "phoneNumber";
     private final static String PARAM_APP_TOKEN = "token";
     private final static String RPC_ADD_ALLY = "addAlly";
-    private final static String PARAM_MY_CODE = "my_code";
-    private final static String PARAM_FRIEND_CODE = "friend_code";
+    private final static String PARAM_MY_CODE = "myCode";
+    private final static String PARAM_FRIEND_CODE = "allyCode";
     private final static String RPC_UPDATE_TOKEN = "updateToken";
     private final static String RPC_ALLY_LIST = "getAllyList";
 
