@@ -1,5 +1,6 @@
 package com.example.sam.beseen;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -38,13 +39,22 @@ public class Status extends AppCompatActivity {
                 }
             };
 
+    ImageButton.OnClickListener nextPageButtonListener =
+            new ImageButton.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToAlliesScreenPage = new Intent(getApplicationContext(), AlliesScreen.class);
+                    startActivity(goToAlliesScreenPage);
+                }
+            };
+
     private final ServerCaller serverCaller = ServerCaller.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_status);
+        setContentView(R.layout.fragment_status);
 
         try {
             final ImageButton redLightButton = (ImageButton) findViewById(R.id.redLightButton);
@@ -58,5 +68,8 @@ public class Status extends AppCompatActivity {
         }
         catch(NullPointerException e){
         }
+
+        final ImageButton button = (ImageButton) findViewById(R.id.nextPage);
+        button.setOnClickListener(nextPageButtonListener);
     }
 }

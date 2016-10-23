@@ -9,9 +9,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import static com.example.sam.beseen.R.drawable.layout_bg;
+
 public class AlliesScreen extends AppCompatActivity {
+
+    final int sdk = android.os.Build.VERSION.SDK_INT;
 
     ImageButton.OnClickListener imageButtonListener =
             new ImageButton.OnClickListener() {
@@ -32,10 +37,28 @@ public class AlliesScreen extends AppCompatActivity {
                 null);
 
 
+        String[] names = {"Tom", "Dick", "Harry"};
         for (int i = 0; i < 3; i++) {
             FrameLayout custom = (FrameLayout) inflater.inflate(R.layout.ally_template, null);
+            RelativeLayout rl = (RelativeLayout) custom.findViewById(R.id.AllyTemplate);
+
+            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                if((i%3) == 0)
+                    rl.setBackgroundDrawable( getResources().getDrawable(R.drawable.layout_bg) );
+                else if ((i%3) == 1)
+                    rl.setBackgroundDrawable( getResources().getDrawable(R.drawable.layout_red) );
+                else
+                    rl.setBackgroundDrawable( getResources().getDrawable(R.drawable.layout_yellow) );
+            } else {
+                if((i%3) == 0)
+                    rl.setBackground( getResources().getDrawable(R.drawable.layout_bg) );
+                else if ((i%3) == 1)
+                    rl.setBackground( getResources().getDrawable(R.drawable.layout_red) );
+                else
+                    rl.setBackground( getResources().getDrawable(R.drawable.layout_yellow) );
+            }
             TextView tv = (TextView) custom.findViewById(R.id.AllyNameTemplate);
-            tv.setText("Custom View " + i);
+            tv.setText(names[i]);
             parent.addView(custom);
         }
 
