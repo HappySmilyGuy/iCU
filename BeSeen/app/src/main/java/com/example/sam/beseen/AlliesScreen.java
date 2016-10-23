@@ -11,12 +11,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.example.sam.beseen.dataobjects.Ally;
+import com.example.sam.beseen.server.ServerCaller;
+
+import java.util.List;
 
 import static com.example.sam.beseen.R.drawable.layout_bg;
 
 public class AlliesScreen extends AppCompatActivity {
 
     final int sdk = android.os.Build.VERSION.SDK_INT;
+    private static final String LOCAL_DATA = "LocalDataStore";
+    private final ServerCaller serverCaller = ServerCaller.getInstance();
 
     ImageButton.OnClickListener imageButtonListener =
             new ImageButton.OnClickListener() {
@@ -36,7 +42,7 @@ public class AlliesScreen extends AppCompatActivity {
         LinearLayout parent = (LinearLayout) inflater.inflate(R.layout.content_allies_screen,
                 null);
 
-
+        serverCaller.getAllies(getSharedPreferences(LOCAL_DATA, MODE_PRIVATE).getString("username", null), this);
         String[] names = {"Tom", "Dick", "Harry"};
         for (int i = 0; i < 3; i++) {
             FrameLayout custom = (FrameLayout) inflater.inflate(R.layout.ally_template, null);
@@ -67,6 +73,10 @@ public class AlliesScreen extends AppCompatActivity {
         final ImageButton button = (ImageButton) findViewById(R.id.registerButton);
 
         button.setOnClickListener(imageButtonListener);
+    }
+
+    public void receiveAllyList(List<Ally> allies) {
+        // do something with allies
     }
 
 }

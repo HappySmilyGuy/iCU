@@ -2,13 +2,24 @@ package com.example.sam.beseen.server;
 
 import android.os.AsyncTask;
 
+import android.util.Log;
+import com.example.sam.beseen.AlliesScreen;
+import com.example.sam.beseen.dataobjects.Ally;
 import com.example.sam.beseen.dataobjects.TLState;
 import com.google.firebase.iid.FirebaseInstanceId;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Eddie on 22-Oct-16.
@@ -28,8 +39,10 @@ public class ServerCaller{
     private final static String PARAM_MY_CODE = "my_code";
     private final static String PARAM_FRIEND_CODE = "friend_code";
     private final static String RPC_UPDATE_TOKEN = "updateToken";
+    private final static String RPC_ALLY_LIST = "getAllyList";
 
     private static ServerCaller instance = null;
+    private AlliesScreen alliesScreen = null;
 
     public void changeState(String email, TLState state){
         new messageServer().execute(createURL(RPC_CHANGE_STATE, "?" + PARAM_EMAIL + "=" + email
@@ -46,14 +59,20 @@ public class ServerCaller{
     public void addAlly(String email, String myCode, String theirCode){
         new messageServer().execute(createURL(RPC_ADD_ALLY,
                 "?" + PARAM_EMAIL + "=" + email
-                + "&" + PARAM_MY_CODE + "=" + myCode
-                + "&" + PARAM_FRIEND_CODE + "=" + theirCode));
+                + "&" + PARAM_MY_CODE + "=" + myCode.toUpperCase()
+                + "&" + PARAM_FRIEND_CODE + "=" + theirCode.toUpperCase()));
     }
 
     public void updateToken(String email, String token) {
         new messageServer().execute(createURL(RPC_UPDATE_TOKEN,
                 "?" + PARAM_EMAIL + "=" + email
                 + "&" + PARAM_APP_TOKEN + "=" + token));
+    }
+
+    public void getAllies(String email, AlliesScreen alliesScreen) {
+        this.alliesScreen = alliesScreen;
+        new objectRetriever().execute(createURL(RPC_ALLY_LIST,
+                "?" + PARAM_EMAIL + "=" + email));
     }
 
     private class messageServer extends AsyncTask<URL, Integer, Boolean>
@@ -80,6 +99,59 @@ public class ServerCaller{
             if(result) {
 
             }
+        }
+    }
+
+    private class objectRetriever extends AsyncTask<URL, Integer, JSONArray>
+    {
+        @Override
+        protected JSONArray doInBackground(URL... urls) {
+            URL url = urls[0];
+            String result;
+            try
+            {
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = connection.getInputStream();
+                result = readFromStream(inputStream);
+                return new JSONArray(result);
+            }
+            catch (MalformedURLException e){
+                return null;
+            }
+            catch (IOException e){
+                return null;
+            }
+            catch (JSONException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray result) {
+            List<Ally> allies = new ArrayList<>();
+            if(result != null) {
+                try {
+                    for (int i = 0; i < result.length(); i++) {
+                        JSONObject jsonAlly = result.getJSONObject(i);
+                        Ally ally = new Ally(jsonAlly.getString("email"), TLState.valueOf(jsonAlly.getString("state")));
+                        allies.add(ally);
+                    }
+                    alliesScreen.receiveAllyList(allies);
+                }
+                catch (JSONException e) {
+                    Log.d("Ahhhhhhhhhhhhh", e.getStackTrace().toString());
+                }
+            }
+        }
+
+        private String readFromStream(InputStream in) throws IOException {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            StringBuilder builder = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+            return builder.toString();
         }
     }
 
