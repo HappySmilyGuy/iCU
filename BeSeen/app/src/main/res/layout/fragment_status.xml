@@ -26,7 +26,7 @@
             android:layout_width="130dp"
             android:layout_height="130dp"
             app:srcCompat="@drawable/red_off_1hdpi"
-            android:id="@+id/imageButton2"  />
+            android:id="@+id/redLightButton"  />
 
         <ImageButton
             android:clickable="true"
@@ -38,7 +38,7 @@
             android:layout_width="130dp"
             android:layout_height="130dp"
              app:srcCompat="@drawable/amber_off_1hdpi"
-            android:id="@+id/imageButton3" />
+            android:id="@+id/yellowLightButton" />
 
         <ImageButton
             android:clickable="true"
@@ -50,7 +50,7 @@
             android:layout_width="133dp"
             android:layout_height="130dp"
             app:srcCompat="@drawable/green_off_1hdpi"
-            android:id="@+id/imageButton4"
+            android:id="@+id/greenLightButton"
             android:layout_weight="0.15" />
 
     </LinearLayout>
@@ -68,9 +68,9 @@
         android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:background="@color/colorPrimary"
-        app:srcCompat="@drawable/chevron_right_m"
-        android:id="@+id/imageButton"
+        android:background="@android:color/transparent"
+        app:srcCompat="@android:drawable/ic_media_play"
+        android:id="@+id/nextPage"
         android:layout_weight="2.06"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/viewFlipper"
