@@ -1,6 +1,7 @@
 package com.example.sam.beseen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,8 @@ public class AddAlly extends AppCompatActivity {
                         String username = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE).getString("username", null);
                         if (username != null) {
                             serverCaller.addAlly(username, userCode, allyCode);
+                            Intent goToAlliesScreenPage = new Intent(getApplicationContext(), AlliesScreen.class);
+                            startActivity(goToAlliesScreenPage);
                         }
                     } else {
 

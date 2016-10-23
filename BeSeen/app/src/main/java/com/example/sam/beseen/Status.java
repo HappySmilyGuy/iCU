@@ -24,32 +24,25 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    serverCaller.changeState("default@email.com", TLState.RED);
+                    SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
+                    String username = preferences.getString("username", null);
+                    serverCaller.changeState(username, TLState.RED);
+                    saveState(TLState.RED);
                     // TODO change all images to off and yellow to on.
-
-                    yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
-                    greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
-                    redLightButton = (ImageButton) findViewById(R.id.redLightButton);
-
-                    yellowLightButton.setImageResource(R.drawable.amber_off_1hdpi);
-                    greenLightButton.setImageResource(R.drawable.green_off_1hdpi);
-                    redLightButton.setImageResource(R.drawable.red_on_1hdpi);
+                    setRed();
                 }
             };
     ImageButton.OnClickListener yellowLightButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    serverCaller.changeState("default@email.com", TLState.YELLOW);
+                    SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
+                    String username = preferences.getString("username", null);
+                    serverCaller.changeState(username, TLState.YELLOW);
+                    saveState(TLState.YELLOW);
                     // TODO change all images to off and yellow to on.
 
-                    yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
-                    greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
-                    redLightButton = (ImageButton) findViewById(R.id.redLightButton);
-
-                    yellowLightButton.setImageResource(R.drawable.amber_on_1hdpi);
-                    greenLightButton.setImageResource(R.drawable.green_off_1hdpi);
-                    redLightButton.setImageResource(R.drawable.red_off_1hdpi);
+                    setYellow();
                 }
             };
 
@@ -57,16 +50,13 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    serverCaller.changeState("default@email.com", TLState.GREEN);
+                    SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
+                    String username = preferences.getString("username", null);
+                    serverCaller.changeState(username, TLState.GREEN);
+                    saveState(TLState.GREEN);
                     // TODO change all images to off and yellow to on.
 
-                    yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
-                    greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
-                    redLightButton = (ImageButton) findViewById(R.id.redLightButton);
-
-                    yellowLightButton.setImageResource(R.drawable.amber_off_1hdpi);
-                    greenLightButton.setImageResource(R.drawable.green_on_1hdpi);
-                    redLightButton.setImageResource(R.drawable.red_off_1hdpi);
+                    setGreen();
                 }
             };
 
@@ -78,6 +68,36 @@ public class Status extends AppCompatActivity {
                     startActivity(goToAlliesScreenPage);
                 }
             };
+
+    public void setRed() {
+        yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
+        greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
+        redLightButton = (ImageButton) findViewById(R.id.redLightButton);
+
+        yellowLightButton.setImageResource(R.drawable.amber_off_1hdpi);
+        greenLightButton.setImageResource(R.drawable.green_off_1hdpi);
+        redLightButton.setImageResource(R.drawable.red_on_1hdpi);
+    }
+
+    public void setYellow() {
+        yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
+        greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
+        redLightButton = (ImageButton) findViewById(R.id.redLightButton);
+
+        yellowLightButton.setImageResource(R.drawable.amber_on_1hdpi);
+        greenLightButton.setImageResource(R.drawable.green_off_1hdpi);
+        redLightButton.setImageResource(R.drawable.red_off_1hdpi);
+    }
+
+    public void setGreen() {
+        yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
+        greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
+        redLightButton = (ImageButton) findViewById(R.id.redLightButton);
+
+        yellowLightButton.setImageResource(R.drawable.amber_off_1hdpi);
+        greenLightButton.setImageResource(R.drawable.green_on_1hdpi);
+        redLightButton.setImageResource(R.drawable.red_off_1hdpi);
+    }
 
     private final ServerCaller serverCaller = ServerCaller.getInstance();
 
@@ -112,5 +132,23 @@ public class Status extends AppCompatActivity {
         final ImageButton button = (ImageButton) findViewById(R.id.nextPage);
         button.setOnClickListener(nextPageButtonListener);
 
+        String stateString =  preferences.getString("state", null);
+        if(stateString != null) {
+            TLState state = TLState.valueOf(stateString);
+            if(state.equals(TLState.RED)) {
+                setRed();
+            } else if (state.equals(TLState.YELLOW)) {
+                setYellow();
+            } else if (state.equals(TLState.GREEN)) {
+                setGreen();
+            }
+        }
+
+    }
+
+    public void saveState(TLState state) {
+        SharedPreferences.Editor editor = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE).edit();
+        editor.putString("state", state.toString());
+        editor.apply();
     }
 }
