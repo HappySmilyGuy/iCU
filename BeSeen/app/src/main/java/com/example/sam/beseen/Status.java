@@ -3,7 +3,6 @@ package com.example.sam.beseen;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import android.widget.ImageButton;
@@ -17,8 +16,7 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Log.d("Eddie's messages", "clicked red");
-                    //serverCaller.changeState("default@email.com", TLState.RED);
+                    serverCaller.changeState("default@email.com", TLState.RED);
                     // TODO change all images to off and yellow to on.
                 }
             };
@@ -26,8 +24,7 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Eddie's messages", "clicked yellow");
-                   // serverCaller.changeState("default@email.com", TLState.YELLOW);
+                    serverCaller.changeState("default@email.com", TLState.YELLOW);
                     // TODO change all images to off and yellow to on.
                 }
             };
@@ -36,8 +33,7 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Eddie's messages", "clicked green");
-                   // serverCaller.changeState("default@email.com", TLState.GREEN);
+                    serverCaller.changeState("default@email.com", TLState.GREEN);
                     // TODO change all images to off and yellow to on.
                 }
             };
@@ -61,7 +57,6 @@ public class Status extends AppCompatActivity {
             greenLightButton.setOnClickListener(greenLightButtonListener);
         }
         catch(NullPointerException e){
-            Log.d("Eddie's messages", "ImageButton catch");
         }
     }
 }

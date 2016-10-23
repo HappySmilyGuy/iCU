@@ -1,14 +1,7 @@
 package com.example.sam.beseen.server;
 
-import android.content.ContentProvider;
-import android.content.ContentValues;
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.util.Log;
 
-import com.example.sam.beseen.R;
 import com.example.sam.beseen.dataobjects.TLState;
 
 import java.io.IOException;
@@ -21,55 +14,64 @@ import java.net.URL;
  */
 
 public class ServerCaller{
-    Context context;
+    private final static String SERVER = "25.82.18.242";
+    private final static String PORT = "8080";
+    private final static String RPC_CHANGE_STATE = "changeState";
+    private final static String PARAM_EMAIL = "email";
+    private final static String PARAM_STATE = "state";
+    private final static String RPC_REGISTER = "register";
+    private final static String PARAM_PASSWORD = "passwordHash";
+    private final static String PARAM_PHONE_NUMBER = "phoneNumber";
+    private final static String RPC_ADD_ALLY = "addAlly";
+    private final static String PARAM_MY_CODE = "my_code";
+    private final static String PARAM_FRIEND_CODE = "friend_code";
 
     public void changeState(String email, TLState state){
-        Log.d("Eddie's messages", "changeState.start");
-        messageServer(context.getResources().getString(R.string.rpc_change_state),
-                "?" + context.getResources().getString(R.string.email_param) + "=" + email
-                + "&" + context.getResources().getString(R.string.state_param) + "=" + state);
-        Log.d("Eddie's messages", "changeState.end");
+        new messageServer().execute(createURL(RPC_CHANGE_STATE, "?" + PARAM_EMAIL + "=" + email
+                                    + "&" + PARAM_STATE + "=" + state));
     }
     public void register(String email, String password, String phone){
-        messageServer(context.getResources().getString(R.string.rpc_register),
-                "?" + context.getResources().getString(R.string.email_param) + "=" + email
-                + "&" + context.getResources().getString(R.string.password_param) + "=" + password
-                + "&" + context.getResources().getString(R.string.phone_no_param) + "=" + phone);
+        new messageServer().execute(createURL(RPC_REGISTER,
+                "?" + PARAM_EMAIL + "=" + email
+                + "&" + PARAM_PASSWORD + "=" + password
+                + "&" + PARAM_PHONE_NUMBER + "=" + phone));
     }
     public void addAlly(String email, String my_code, String their_code){
-        messageServer(context.getResources().getString(R.string.rpc_add_ally),
-                "?" + context.getResources().getString(R.string.email_param)
-                + "&" + context.getResources().getString(R.string.my_code) + "=" + my_code
-                + "&" + context.getResources().getString(R.string.friend_code) + "=" + their_code);
+        new messageServer().execute(createURL(RPC_ADD_ALLY,
+                "?" + PARAM_EMAIL + "=" + email
+                + "&" + PARAM_MY_CODE + "=" + my_code
+                + "&" + PARAM_FRIEND_CODE + "=" + their_code));
     }
 
-    private void messageServer(String rpc_name, String variables)
+    private class messageServer extends AsyncTask<URL, Integer, Boolean>
     {
-        try {
-            URL url = new URL("http://" + context.getResources().getString(R.string.server)
-                        + ":" + context.getResources().getString(R.string.port) + "/" + rpc_name
-                        + variables);
-            Log.d("Eddie's message", "start");
-
-            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            Log.d("Eddie's message", "middle");
-            connection.connect();
-            Log.d("Eddie's message", "end");
-        }
-        catch (MalformedURLException e){
-            Log.d("Eddie's exceptions", "messageServer MalfomedURLException");
-        }
-        catch (IOException e){
-            Log.d("Eddie's exceptions", "messageServer IOException");
-        }
-        catch (Exception e)
-        {
-            Log.d("Eddie's exceptions", "messageServer Any Exception");
+        @Override
+        protected Boolean doInBackground(URL... urls) {
+            URL url = urls[0];
+            try
+            {
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+            }
+            catch (MalformedURLException e){
+                return false;
+            }
+            catch (IOException e){
+                return false;
+            }
+            return true;
         }
     }
 
-   // public class messageServer extends AsyncTask<URL, Integer, boolean>
-   // {
-
-   // }
+    private URL createURL(String rpc_name, String variables)
+    {
+        try{
+            URL output = new URL("http://" + SERVER + ":" + PORT + "/" + rpc_name + variables);
+            return output;
+        }
+        catch (MalformedURLException e)
+        {
+            return null;
+        }
+    }
 }
