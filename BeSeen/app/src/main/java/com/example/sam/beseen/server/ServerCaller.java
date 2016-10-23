@@ -65,6 +65,7 @@ public class ServerCaller{
             {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 int rc = connection.getResponseCode();
+                return (rc >= 200 && rc < 300);
             }
             catch (MalformedURLException e){
                 return false;
@@ -72,7 +73,6 @@ public class ServerCaller{
             catch (IOException e){
                 return false;
             }
-            return true;
         }
 
         @Override

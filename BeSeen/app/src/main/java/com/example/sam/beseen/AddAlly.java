@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import com.example.sam.beseen.server.ServerCaller;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -20,7 +21,9 @@ public class AddAlly extends AppCompatActivity {
     String userCode;
     String allyCode;
     String allyName;
-    public static final String LOCAL_DATA = "LocalDataStore";
+    private static final String LOCAL_DATA = "LocalDataStore";
+    private final ServerCaller serverCaller = ServerCaller.getInstance();
+
 
     Button.OnClickListener buttonListener =
             new ImageButton.OnClickListener() {
@@ -28,8 +31,11 @@ public class AddAlly extends AppCompatActivity {
                 public void onClick(View v) {
                     allyCode = ((EditText)findViewById(R.id.allyCode)).getText().toString();
                     allyName = ((EditText)findViewById(R.id.enterAllyName)).getText().toString();
-                    if(!userCode.equals(null) && !allyCode.equals(null)) {
-                        //send userCode, allyCode
+                    if(userCode != null && allyCode != null) {
+                        String username = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE).getString("username", null);
+                        if (username != null) {
+                            serverCaller.addAlly(username, userCode, allyCode);
+                        }
                     } else {
 
                     }
@@ -59,7 +65,7 @@ public class AddAlly extends AppCompatActivity {
     public void saveEmailNamePair(String email, String name) {
         SharedPreferences.Editor editor = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE).edit();
         editor.putString(email, name);
-        editor.commit();
+        editor.apply();
     }
 
 }
