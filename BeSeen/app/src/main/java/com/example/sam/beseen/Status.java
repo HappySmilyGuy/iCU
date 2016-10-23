@@ -1,6 +1,7 @@
 package com.example.sam.beseen;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -16,6 +17,8 @@ public class Status extends AppCompatActivity {
     private ImageButton yellowLightButton;
     private ImageButton greenLightButton;
     private ImageButton redLightButton;
+
+    private static final String LOCAL_DATA = "LocalDataStore";
 
     ImageButton.OnClickListener redLightButtonListener =
             new ImageButton.OnClickListener(){
@@ -82,6 +85,15 @@ public class Status extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
+        String username = preferences.getString("username", null);
+
+        if(username == null) {
+            Intent goToRegistrationPage = new Intent(getApplicationContext(), Registration.class);
+            startActivity(goToRegistrationPage);
+        }
+
         setContentView(R.layout.fragment_status);
 
         try {
@@ -99,5 +111,6 @@ public class Status extends AppCompatActivity {
 
         final ImageButton button = (ImageButton) findViewById(R.id.nextPage);
         button.setOnClickListener(nextPageButtonListener);
+
     }
 }

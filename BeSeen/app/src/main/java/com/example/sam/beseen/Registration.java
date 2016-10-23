@@ -1,5 +1,6 @@
 package com.example.sam.beseen;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,8 @@ public class Registration extends AppCompatActivity {
                     if(email != null && password.equals(password2) && phone != null) {
                         serverCaller.register(email, password, phone);
                         saveUsername(email);
+                        Intent goToStatusPage = new Intent(getApplicationContext(), Status.class);
+                        startActivity(goToStatusPage);
                     } else {
 
                     }
