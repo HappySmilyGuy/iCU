@@ -26,8 +26,8 @@ import java.util.List;
  */
 
 public class ServerCaller{
-    private final static String SERVER = "25.82.18.242";
-    private final static String PORT = "8080";
+    private final static String SERVER = "http://ec2-35-161-96-38.us-west-2.compute.amazonaws.com/";
+    private final static String PORT = "80";
     private final static String RPC_CHANGE_STATE = "changeState";
     private final static String PARAM_EMAIL = "email";
     private final static String PARAM_STATE = "state";
