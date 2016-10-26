@@ -7,12 +7,14 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.BsonArray;
+import org.bson.BsonTimestamp;
 import org.bson.Document;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.mongodb.client.model.Updates.*;
@@ -81,9 +83,10 @@ public class MongoDb {
         boolean result = userCollection.getWriteConcern().isAcknowledged();
         Document userConnect = userCollection.find(and(eq(CODE_FIELD_NAME, allyCode), eq(ALLY_CODE_FIELD_NAME, code))).first();
         if (userConnect != null) {
-            Long timestamp = (Long) userConnect.get(CODE_TIMESTAMP_FIELD_NAME);
+            BsonTimestamp timestamp = (BsonTimestamp) userConnect.get(CODE_TIMESTAMP_FIELD_NAME);
+            long longTimestamp = (long) timestamp.getTime() * 1000;
             Calendar codeTimestamp = Calendar.getInstance();
-            codeTimestamp.setTimeInMillis(timestamp);
+            codeTimestamp.setTimeInMillis(longTimestamp);
             Instant codeTimestampInstant = codeTimestamp.toInstant();
             if (ChronoUnit.MINUTES.between(codeTimestampInstant, Instant.now()) < 30) {
                 result = userCollection.updateOne(eq(EMAIL_FIELD_NAME, userDoc.get(EMAIL_FIELD_NAME)),
