@@ -17,7 +17,7 @@ public class Registration extends AppCompatActivity {
     private static final String LOCAL_DATA = "LocalDataStore";
     private final ServerCaller serverCaller = ServerCaller.getInstance();
 
-    Button.OnClickListener buttonListener =
+    Button.OnClickListener registerButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -33,8 +33,17 @@ public class Registration extends AppCompatActivity {
                         Intent goToStatusPage = new Intent(getApplicationContext(), Status.class);
                         startActivity(goToStatusPage);
                     } else {
-
+                        // TODO react to failed register
                     }
+                }
+            };
+
+    Button.OnClickListener toLoginButtonListener =
+            new ImageButton.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToLoginPage = new Intent(getApplicationContext(), Login.class);
+                    startActivity(goToLoginPage);
                 }
             };
 
@@ -43,8 +52,11 @@ public class Registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        final Button button = (Button) findViewById(R.id.registerButton);
-        button.setOnClickListener(buttonListener);
+        final Button registerButton = (Button) findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(registerButtonListener);
+
+        final Button toLoginButton = (Button) findViewById(R.id.goToLoginButton);
+        toLoginButton.setOnClickListener(toLoginButtonListener);
     }
 
     public void saveUsername(String userName) {

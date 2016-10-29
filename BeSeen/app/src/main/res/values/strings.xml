@@ -11,4 +11,14 @@
 
     <string name="title_activity_allies_screen">AlliesScreen</string>
     <string name="title_activity_registration">Registration</string>
+
+    <string name="register_title">Be Seen Registration</string>
+    <string name="login_title">Login</string>
+    <string name="password_hint">Password</string>
+    <string name="reenter_password_hint">Confirm Password</string>
+    <string name="phone_number_hint">Phone number</string>
+    <string name="email_hint">Email</string>
+    <string name="go_to_login">Go to Login</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
 </resources>

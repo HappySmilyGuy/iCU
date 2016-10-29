@@ -40,6 +40,7 @@ public class ServerCaller{
     private final static String PARAM_FRIEND_CODE = "allyCode";
     private final static String RPC_UPDATE_TOKEN = "updateToken";
     private final static String RPC_ALLY_LIST = "getAllyList";
+    private final static String RPC_LOGIN = "login";
 
     private static ServerCaller instance = null;
     private AlliesScreen alliesScreen = null;
@@ -56,6 +57,15 @@ public class ServerCaller{
                 + "&" + PARAM_PHONE_NUMBER + "=" + phone
                 + "&" + PARAM_APP_TOKEN + "=" + tokenId));
     }
+
+    public boolean check_login(String email, String password)
+    {
+        new objectRetriever().execute(createURL(RPC_LOGIN,
+                "?" + PARAM_EMAIL + "+" + "=" + email
+                + "&" + PARAM_PASSWORD + "=" + password));
+        return false;
+    }
+
     public void addAlly(String email, String myCode, String theirCode){
         new messageServer().execute(createURL(RPC_ADD_ALLY,
                 "?" + PARAM_EMAIL + "=" + email
