@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.example.sam.beseen.server.HasherFunction;
 import com.example.sam.beseen.server.ServerCaller;
 
 public class Registration extends AppCompatActivity {
@@ -24,8 +26,9 @@ public class Registration extends AppCompatActivity {
                     String password2 = ((EditText)findViewById(R.id.reenterPassword)).getText().toString();
                     String phone = ((EditText)findViewById(R.id.phoneNumber)).getText().toString();
 
-                    if(email != null && password.equals(password2) && phone != null) {
-                        serverCaller.register(email, password, phone);
+                    if(!email.equals("") && password.equals(password2) && !phone.equals("")
+                            && password.length() >= 5) {
+                        serverCaller.register(email, HasherFunction.hash(password), phone);
                         saveUsername(email);
                         Intent goToStatusPage = new Intent(getApplicationContext(), Status.class);
                         startActivity(goToStatusPage);
