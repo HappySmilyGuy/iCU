@@ -26,7 +26,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            app:srcCompat="@drawable/red_off_1hdpi"
             android:id="@+id/redLightButton"  />
 
         <ImageButton
