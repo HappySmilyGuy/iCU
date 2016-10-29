@@ -9,8 +9,6 @@
     <string name="enter_their_code">Enter their code here:</string>
     <string name="add_button_text">Add</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_allies_screen">AlliesScreen</string>
     <string name="title_activity_registration">Registration</string>
 </resources>
