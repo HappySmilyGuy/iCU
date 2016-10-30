@@ -70,6 +70,11 @@ public class MongoDb {
         return (userCollection.getWriteConcern().isAcknowledged());
     }
 
+    public boolean login(String email, String hash) {
+        MongoIterable result = userCollection.find(and(eq(EMAIL_FIELD_NAME, email), eq(PASSWORD_HASH_FIELD_NAME, hash)));
+        return (result.first() != null);
+    }
+
     public boolean changeState(String email, String state) {
         UpdateResult result = userCollection.updateOne(eq(EMAIL_FIELD_NAME, email), set(STATE_FIELD_NAME, state));
         return updateWasSuccess(result);

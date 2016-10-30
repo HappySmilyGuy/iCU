@@ -34,6 +34,14 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @RequestMapping("/login")
+    public ResponseEntity<String> login(@Email String email, String passwordHash) {
+        if (mongoDb.login(email, passwordHash)) {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @RequestMapping("/changeState")
     public ResponseEntity<String> changeState(@Email String email, String state) {
         if (mongoDb.changeState(email, state)) {
