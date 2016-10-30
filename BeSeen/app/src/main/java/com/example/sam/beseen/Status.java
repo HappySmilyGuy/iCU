@@ -13,36 +13,29 @@ import com.example.sam.beseen.dataobjects.TLState;
 import com.example.sam.beseen.server.ServerCaller;
 
 public class Status extends AppCompatActivity {
-
-    private ImageButton yellowLightButton;
-    private ImageButton greenLightButton;
-    private ImageButton redLightButton;
-
     private static final String LOCAL_DATA = "LocalDataStore";
+    private final ServerCaller serverCaller = ServerCaller.getInstance();
 
     ImageButton.OnClickListener redLightButtonListener =
             new ImageButton.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    setLights(TLState.RED);
                     SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
                     String username = preferences.getString("username", null);
                     serverCaller.changeState(username, TLState.RED);
                     saveState(TLState.RED);
-                    // TODO change all images to off and yellow to on.
-                    setRed();
                 }
             };
     ImageButton.OnClickListener yellowLightButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    setLights(TLState.YELLOW);
                     SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
                     String username = preferences.getString("username", null);
                     serverCaller.changeState(username, TLState.YELLOW);
                     saveState(TLState.YELLOW);
-                    // TODO change all images to off and yellow to on.
-
-                    setYellow();
                 }
             };
 
@@ -50,13 +43,11 @@ public class Status extends AppCompatActivity {
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    setLights(TLState.GREEN);
                     SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
                     String username = preferences.getString("username", null);
                     serverCaller.changeState(username, TLState.GREEN);
                     saveState(TLState.GREEN);
-                    // TODO change all images to off and yellow to on.
-
-                    setGreen();
                 }
             };
 
@@ -69,42 +60,33 @@ public class Status extends AppCompatActivity {
                 }
             };
 
-    public void setRed() {
-        yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
-        greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
-        redLightButton = (ImageButton) findViewById(R.id.redLightButton);
+    public void setLights(TLState state) {
+        ImageButton redLightButton = (ImageButton) findViewById(R.id.redLightButton);
+        ImageButton yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
+        ImageButton greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
 
-        yellowLightButton.setImageResource(R.drawable.amber_off_1hdpi);
-        greenLightButton.setImageResource(R.drawable.green_off_1hdpi);
-        redLightButton.setImageResource(R.drawable.red_on_1hdpi);
+        redLightButton.setImageResource(R.drawable.red_off);
+        yellowLightButton.setImageResource(R.drawable.amber_off);
+        greenLightButton.setImageResource(R.drawable.green_off);
+
+        switch (state) {
+            case GREEN:
+                greenLightButton.setImageResource(R.drawable.green_on);
+                break;
+            case YELLOW:
+                yellowLightButton.setImageResource(R.drawable.amber_on);
+                break;
+            case RED:
+                redLightButton.setImageResource(R.drawable.red_on);
+                break;
+            default:
+                break;
+        }
     }
-
-    public void setYellow() {
-        yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
-        greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
-        redLightButton = (ImageButton) findViewById(R.id.redLightButton);
-
-        yellowLightButton.setImageResource(R.drawable.amber_on_1hdpi);
-        greenLightButton.setImageResource(R.drawable.green_off_1hdpi);
-        redLightButton.setImageResource(R.drawable.red_off_1hdpi);
-    }
-
-    public void setGreen() {
-        yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
-        greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
-        redLightButton = (ImageButton) findViewById(R.id.redLightButton);
-
-        yellowLightButton.setImageResource(R.drawable.amber_off_1hdpi);
-        greenLightButton.setImageResource(R.drawable.green_on_1hdpi);
-        redLightButton.setImageResource(R.drawable.red_off_1hdpi);
-    }
-
-    private final ServerCaller serverCaller = ServerCaller.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
         String username = preferences.getString("username", null);
@@ -134,16 +116,11 @@ public class Status extends AppCompatActivity {
 
         String stateString =  preferences.getString("state", null);
         if(stateString != null) {
-            TLState state = TLState.valueOf(stateString);
-            if(state.equals(TLState.RED)) {
-                setRed();
-            } else if (state.equals(TLState.YELLOW)) {
-                setYellow();
-            } else if (state.equals(TLState.GREEN)) {
-                setGreen();
-            }
+            setLights(TLState.valueOf(stateString));
         }
-
+        else {
+            setLights(TLState.UNSET);
+        }
     }
 
     public void saveState(TLState state) {
