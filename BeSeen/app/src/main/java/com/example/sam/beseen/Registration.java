@@ -19,7 +19,7 @@ public class Registration extends AppCompatActivity {
     private final ServerCaller serverCaller = ServerCaller.getInstance();
     private static final int PASSWORD_MIN_CHARS = 5;
 
-    Button.OnClickListener buttonListener =
+    Button.OnClickListener registerButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -56,13 +56,25 @@ public class Registration extends AppCompatActivity {
                 }
             };
 
+    Button.OnClickListener toLoginButtonListener =
+            new ImageButton.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToLoginPage = new Intent(getApplicationContext(), Login.class);
+                    startActivity(goToLoginPage);
+                }
+            };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        final Button button = (Button) findViewById(R.id.registerButton);
-        button.setOnClickListener(buttonListener);
+        final Button registerButton = (Button) findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(registerButtonListener);
+
+        final Button toLoginButton = (Button) findViewById(R.id.goToLoginButton);
+        toLoginButton.setOnClickListener(toLoginButtonListener);
     }
 
     public void saveUsername(String userName) {

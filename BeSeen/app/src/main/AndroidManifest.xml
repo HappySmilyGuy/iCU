@@ -31,7 +31,11 @@
         <activity
             android:name=".Registration"
             android:label="@string/title_activity_registration"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Login"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar" />
         <service
             android:name=".notification.MyFirebaseInstanceIDService">
             <intent-filter>
