@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.sam.beseen.server.HasherFunction;
 import com.example.sam.beseen.server.ServerCaller;
@@ -16,6 +17,7 @@ public class Registration extends AppCompatActivity {
 
     private static final String LOCAL_DATA = "LocalDataStore";
     private final ServerCaller serverCaller = ServerCaller.getInstance();
+    private static final int PASSWORD_MIN_CHARS = 5;
 
     Button.OnClickListener buttonListener =
             new ImageButton.OnClickListener() {
@@ -27,13 +29,29 @@ public class Registration extends AppCompatActivity {
                     String phone = ((EditText)findViewById(R.id.phoneNumber)).getText().toString();
 
                     if(!email.equals("") && password.equals(password2) && !phone.equals("")
-                            && password.length() >= 5) {
+                            && password.length() >= PASSWORD_MIN_CHARS) {
                         serverCaller.register(email, HasherFunction.hash(password), phone);
                         saveUsername(email);
                         Intent goToStatusPage = new Intent(getApplicationContext(), Status.class);
                         startActivity(goToStatusPage);
                     } else {
+                        String errorString = "";
+                        if (email.equals("")) {
+                            errorString = "no email address was given.";
+                        } else if (!password.equals(password2)) {
+                            errorString = "given passwords are not equal.";
+                        } else if (password.equals("")) {
+                            errorString = "no password was given.";
+                        } else if (password.length() < PASSWORD_MIN_CHARS){
+                            errorString = "the password given was too short, it must be at least "
+                                          + PASSWORD_MIN_CHARS + " characters long.";
+                        } else if (phone.equals("")) {
+                            errorString = "no phone number was given.";
+                        }
 
+                        TextView errorMessage = (TextView) findViewById(R.id.errorMessage);
+                        errorMessage.setText("Error: " + errorString);
+                        errorMessage.setVisibility(View.VISIBLE);
                     }
                 }
             };
