@@ -12,15 +12,12 @@ import android.widget.ImageButton;
 import com.example.sam.beseen.server.HasherFunction;
 import com.example.sam.beseen.server.ServerCaller;
 
-/**
- * Created by Eddie on 29-Oct-16.
- */
-
 public class Login extends AppCompatActivity {
+
     private static final String LOCAL_DATA = "LocalDataStore";
     private final ServerCaller serverCaller = ServerCaller.getInstance();
 
-    Button.OnClickListener buttonListener =
+    Button.OnClickListener loginButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -28,7 +25,7 @@ public class Login extends AppCompatActivity {
                     String password = ((EditText)findViewById(R.id.enterPassword)).getText().toString();
 
                     serverCaller.check_login(email, HasherFunction.hash(password));
-                    // TODO change to actually check if login is correct.
+
                     saveUsername(email);
                     Intent goToStatusPage = new Intent(getApplicationContext(), Status.class);
                     startActivity(goToStatusPage);
@@ -38,10 +35,10 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_login);
 
-        final Button button = (Button) findViewById(R.id.registerButton);
-        button.setOnClickListener(buttonListener);
+        final Button button = (Button) findViewById(R.id.loginButton);
+        button.setOnClickListener(loginButtonListener);
     }
 
     public void saveUsername(String userName) {
