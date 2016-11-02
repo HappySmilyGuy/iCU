@@ -59,13 +59,11 @@ public class ServerCaller{
                 + "&" + PARAM_APP_TOKEN + "=" + tokenId));
     }
 
-
-    public boolean check_login(String email, String passwordHash)
+    public void check_login(String email, String passwordHash)
     {
-        new objectRetriever().execute(createURL(RPC_LOGIN,
+        new messageServer().execute(createURL(RPC_LOGIN,
                 "?" + PARAM_EMAIL + "+" + "=" + email
                 + "&" + PARAM_PASSWORD + "=" + passwordHash));
-        return false;
     }
 
     public void addAlly(String email, String myCode, String theirCode){
@@ -82,8 +80,25 @@ public class ServerCaller{
     }
 
     public void getAllies(String email, AlliesScreen alliesScreen) {
-        this.alliesScreen = alliesScreen;
-        new objectRetriever().execute(createURL(RPC_ALLY_LIST,
+        final AlliesScreen alliesScreenIn = alliesScreen;
+        new objectRetriever(){
+            protected void onPostExecute(JSONArray result){
+                List<Ally> allies = new ArrayList<>();
+                if(result != null) {
+                    try {
+                        for (int i = 0; i < result.length(); i++) {
+                            JSONObject jsonAlly = result.getJSONObject(i);
+                            Ally ally = new Ally(jsonAlly.getString("email"), TLState.valueOf(jsonAlly.getString("state")));
+                            allies.add(ally);
+                        }
+                        alliesScreenIn.receiveAllyList(allies);
+                    }
+                    catch (JSONException e) {
+                        Log.d("Ahhhhhhhhhhhhh", e.getStackTrace().toString());
+                    }
+                }
+            }
+        }.execute(createURL(RPC_ALLY_LIST,
                 "?" + PARAM_EMAIL + "=" + email));
     }
 
@@ -112,7 +127,7 @@ public class ServerCaller{
         }
     }
 
-    private class objectRetriever extends AsyncTask<URL, Integer, JSONArray>
+    private abstract class objectRetriever extends AsyncTask<URL, Integer, JSONArray>
     {
         @Override
         protected JSONArray doInBackground(URL... urls) {
@@ -136,23 +151,7 @@ public class ServerCaller{
             }
         }
 
-        @Override
-        protected void onPostExecute(JSONArray result) {
-            List<Ally> allies = new ArrayList<>();
-            if(result != null) {
-                try {
-                    for (int i = 0; i < result.length(); i++) {
-                        JSONObject jsonAlly = result.getJSONObject(i);
-                        Ally ally = new Ally(jsonAlly.getString("email"), TLState.valueOf(jsonAlly.getString("state")));
-                        allies.add(ally);
-                    }
-                    alliesScreen.receiveAllyList(allies);
-                }
-                catch (JSONException e) {
-                    Log.d("Ahhhhhhhhhhhhh", e.getStackTrace().toString());
-                }
-            }
-        }
+        protected abstract void onPostExecute(JSONArray result);
 
         private String readFromStream(InputStream in) throws IOException {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
