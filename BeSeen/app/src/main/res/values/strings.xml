@@ -22,4 +22,12 @@
     <string name="go_to_login">Go to Login</string>
     <string name="login_button">Login</string>
     <string name="register_button">Register</string>
+
+    <string name="go_to_registration">Register</string>
+
+    <string name="error_prefix">Error: </string>
+    <string name="error_no_email">email was not input.</string>
+    <string name="error_no_password">password was not input</string>
+    <string name="error_incorrect_login">login details are not registered.</string>
+
 </resources>

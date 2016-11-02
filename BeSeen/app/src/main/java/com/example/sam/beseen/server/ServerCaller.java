@@ -43,7 +43,7 @@ public class ServerCaller{
     private final static String RPC_LOGIN = "login";
 
     private static ServerCaller instance = null;
-    private AlliesScreen alliesScreen = null;
+    public Boolean result = false;
 
     public void changeState(String email, TLState state){
         new messageServer().execute(createURL(RPC_CHANGE_STATE, "?" + PARAM_EMAIL + "=" + email
@@ -107,10 +107,8 @@ public class ServerCaller{
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if(result) {
-
-            }
+        protected void onPostExecute(Boolean out) {
+            result = out;
         }
     }
 
@@ -170,8 +168,7 @@ public class ServerCaller{
     private URL createURL(String rpc_name, String variables)
     {
         try{
-            URL output = new URL("http://" + SERVER + ":" + PORT + "/" + rpc_name + variables);
-            return output;
+            return new URL("http://" + SERVER + ":" + PORT + "/" + rpc_name + variables);
         }
         catch (MalformedURLException e)
         {
