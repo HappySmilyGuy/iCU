@@ -23,8 +23,8 @@
         tools:text="Add Ally"
         android:textColor="@android:color/white"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/registerButton"
-        android:layout_alignStart="@+id/registerButton" />
+        android:layout_alignLeft="@+id/addAllyButton"
+        android:layout_alignStart="@+id/addAllyButton" />
 
     <TextView
         android:text="@string/give_ally_this_code"
@@ -51,7 +51,7 @@
     <Button
         android:text="@string/add_button_text"
         android:layout_height="wrap_content"
-        android:id="@+id/registerButton"
+        android:id="@+id/addAllyButton"
         android:layout_marginTop="19dp"
         android:layout_width="160dp"
         android:layout_below="@+id/allyCode"

@@ -8,8 +8,9 @@
     <string name="my_code_placeholder">1234ABC</string>
     <string name="enter_their_code">Enter their code here:</string>
     <string name="add_button_text">Add</string>
+    <string name="default_ally_name">Default Name</string>
 
-    <string name="title_activity_allies_screen">AlliesScreen</string>
+    <string name="title_activity_allies_screen">Allies</string>
     <string name="title_activity_registration">Registration</string>
     <string name="title_activity_login">Login</string>
 

@@ -5,19 +5,23 @@ package com.example.sam.beseen.dataobjects;
  */
 public class Ally {
 
-    private String email;
+    private String id;
     private TLState state;
+    private String givenName;
 
-    public Ally(String email, TLState state) {
-        this.email = email;
+    public Ally(String email, TLState state, String givenName) {
+        this.id = email;
         this.state = state;
+        this.givenName = givenName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getid() {
+        return id;
     }
 
     public TLState getState() {
         return state;
     }
+
+    public String getGivenName() { return givenName; }
 }
