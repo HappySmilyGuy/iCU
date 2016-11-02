@@ -23,7 +23,7 @@ public class Registration extends AppCompatActivity {
             new ImageButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String email = ((EditText)findViewById(R.id.enterAllyName)).getText().toString();
+                    String email = ((EditText)findViewById(R.id.enterEmail)).getText().toString();
                     String password = ((EditText)findViewById(R.id.enterPassword)).getText().toString();
                     String password2 = ((EditText)findViewById(R.id.reenterPassword)).getText().toString();
                     String phone = ((EditText)findViewById(R.id.phoneNumber)).getText().toString();

@@ -49,20 +49,22 @@ public class ServerCaller{
         new messageServer().execute(createURL(RPC_CHANGE_STATE, "?" + PARAM_EMAIL + "=" + email
                                     + "&" + PARAM_STATE + "=" + state));
     }
-    public void register(String email, String password, String phone){
+
+    public void register(String email, String passwordHash, String phone){
         String tokenId = FirebaseInstanceId.getInstance().getId();
         new messageServer().execute(createURL(RPC_REGISTER,
                 "?" + PARAM_EMAIL + "=" + email
-                + "&" + PARAM_PASSWORD + "=" + password
+                + "&" + PARAM_PASSWORD + "=" + passwordHash
                 + "&" + PARAM_PHONE_NUMBER + "=" + phone
                 + "&" + PARAM_APP_TOKEN + "=" + tokenId));
     }
 
-    public boolean check_login(String email, String password)
+
+    public boolean check_login(String email, String passwordHash)
     {
         new objectRetriever().execute(createURL(RPC_LOGIN,
                 "?" + PARAM_EMAIL + "+" + "=" + email
-                + "&" + PARAM_PASSWORD + "=" + password));
+                + "&" + PARAM_PASSWORD + "=" + passwordHash));
         return false;
     }
 
