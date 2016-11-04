@@ -29,6 +29,15 @@
     <string name="error_prefix">Error: </string>
     <string name="error_no_email">email was not input.</string>
     <string name="error_no_password">password was not input</string>
+    <string name="error_password_too_short">the password given was too short.</string>
     <string name="error_incorrect_login">login details are not registered.</string>
+    <string name="error_password_mismatch">passwords do not match.</string>
+    <string name="error_no_phoneNo">no phone number was given.</string>
+    <string name="error_no_usercode">no usercode was set.</string>
+    <string name="error_no_allycode">no ally code was input.</string>
+    <string name="error_no_username_set">no username is set.</string>
+    <string name="error_incorrect_ally_code">the ally code was incorrect.</string>
+
+    <string name="hint_password_length">It mut be at least %d characters long.</string>
 
 </resources>
