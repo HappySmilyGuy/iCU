@@ -42,7 +42,7 @@ public class AddAlly extends AppCompatActivity {
                     String username = UserInfo.getUsername(getApplicationContext());
 
                     StringBuilder errorBuilder = new StringBuilder();
-                    if (!checksOk(allyCode, username, errorBuilder)) {
+                    if (!checksOk(allyName, allyCode, username, errorBuilder)) {
                         TextView errorMessage = (TextView) findViewById(R.id.errorMessage);
                         errorMessage.setText(errorBuilder.toString());
                         errorMessage.setVisibility(View.VISIBLE);
@@ -83,19 +83,25 @@ public class AddAlly extends AppCompatActivity {
      * @param newAllyID the ID returned from the database
      */
     public final void successfullyAddedAlly(final String newAllyID) {
+        // TODO, allyName could change between sending the message and receiving the result.
         UserInfo.saveIDNamePair(getApplicationContext(), newAllyID, allyName);
     }
 
     /**
      * Checks if userCode and allyCode are set and username exists.
      *
+     * @param givenName the name that the user gives for their new ally.
      * @param allyCode the allyCode to check
      * @param username the username to check.
      * @param errorBuilder the description of the error.
      * @return if the checks were all passed.
      */
-    public final Boolean checksOk(final String allyCode, final String username, final StringBuilder errorBuilder) {
+    public final Boolean checksOk(final String givenName, final String allyCode, final String username, final StringBuilder errorBuilder) {
         errorBuilder.append(getResources().getString(R.string.error_prefix));
+        if (givenName == null || "".equals(givenName)) {
+            errorBuilder.append(getResources().getString(R.string.error_no_name));
+            return false;
+        }
         if (userCode == null || "".equals(userCode)) {
             errorBuilder.append(getResources().getString(R.string.error_no_usercode));
             return false;

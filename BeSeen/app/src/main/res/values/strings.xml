@@ -37,6 +37,7 @@
     <string name="error_no_allycode">no ally code was input.</string>
     <string name="error_no_username_set">no username is set.</string>
     <string name="error_incorrect_ally_code">the ally code was incorrect.</string>
+    <string name="error_no_name">"no ally name was given."</string>
 
     <string name="hint_password_length">It mut be at least %d characters long.</string>
 

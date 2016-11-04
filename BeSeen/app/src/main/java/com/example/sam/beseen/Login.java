@@ -67,9 +67,7 @@ public class Login extends AppCompatActivity {
             };
 
 
-    /**
-     * A button listener to send users to the Register activity.
-     * */
+    /** A button listener to send users to the Register activity. */
     private Button.OnClickListener goToRegisterButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
@@ -111,5 +109,4 @@ public class Login extends AppCompatActivity {
         }
         return true;
     }
-
 }
