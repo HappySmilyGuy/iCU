@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -55,6 +56,8 @@ public class AlliesScreen extends AppCompatActivity {
         setContentView(R.layout.activity_allies_screen);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        RelativeLayout parent = (RelativeLayout) inflater.inflate(R.layout.content_allies_screen,
+                null);
 
         serverCaller.getAllies(UserInfo.getUsername(getApplicationContext()), this);
 
@@ -64,8 +67,8 @@ public class AlliesScreen extends AppCompatActivity {
         allies.add(new Ally("3", TLState.RED, "Harry"));
         allies.add(new Ally("4", TLState.UNSET, "Charles"));
 
-        displayAllies(inflater);
-        setContentView(inflater.inflate(R.layout.content_allies_screen, null));
+        displayAllies(parent, inflater);
+        setContentView(parent);
 
         final ImageButton button = (ImageButton) findViewById(R.id.addAllyButton);
 
@@ -102,11 +105,16 @@ public class AlliesScreen extends AppCompatActivity {
      * @param view the view which to give a unique ID to.
      */
     private void giveUniqueViewId(final FrameLayout view) {
-        int j = 0;
-        while (findViewById(j) != null) {
-            ++j;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            view.setId(view.generateViewId());
+            return;
         }
-        view.setId(j);
+        // TODO test if fallback actually works.
+        int i = 0;
+        while (findViewById(i) != null) {
+            ++i;
+        }
+        view.setId(i);
     }
 
     /**
@@ -145,9 +153,7 @@ public class AlliesScreen extends AppCompatActivity {
      *
      * @param inflater the inflater
      * */
-    private void displayAllies(final LayoutInflater inflater) {
-        RelativeLayout parent = (RelativeLayout) inflater.inflate(R.layout.content_allies_screen,
-                null);
+    private void displayAllies(final RelativeLayout parent, final LayoutInflater inflater) {
         int previousViewId = R.id.allyTitle;
         for (Ally ally : allies) {
             FrameLayout allyView = (FrameLayout) inflater.inflate(R.layout.ally_template, null);
