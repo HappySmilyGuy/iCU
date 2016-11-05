@@ -1,5 +1,7 @@
 package com.example.sam.beseenserver.notificationutils;
 
+import com.example.sam.beseenserver.dbutils.NameToken;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,29 +10,32 @@ import java.util.List;
  */
 public class NotificationCreator {
 
-    public List<JsonMessage> createChangeStatusMessages(String newState, List<String> destinationTokens) {
+    public List<JsonMessage> createChangeStatusMessages(String newState, List<NameToken> destinationNameTokens) {
         List<JsonMessage> jsonMessages = new ArrayList<>();
-        for (String destinationToken : destinationTokens) {
-            JsonMessage jsonMessage = new JsonMessage(createChangedStatusNotification(newState), destinationToken);
+        for (NameToken destinationNameToken : destinationNameTokens) {
+            JsonMessage jsonMessage = new JsonMessage(
+                    createChangedStatusNotification(newState, destinationNameToken.getAllyName()),
+                    destinationNameToken.getToken());
             jsonMessages.add(jsonMessage);
         }
         return jsonMessages;
     }
 
-    private Notification createChangedStatusNotification(String newState) {
-        return new Notification("Status change", "Someone's status has changed to" + newState);
+    private Notification createChangedStatusNotification(String newState, String name) {
+        return new Notification("Status change", name + "'s status has changed to " + newState);
     }
 
-    public List<JsonMessage> createAllySuccessMessages(List<String> destinationTokens) {
+    public List<JsonMessage> createAllySuccessMessages(List<NameToken> destinationNameTokens) {
         List<JsonMessage> jsonMessages = new ArrayList<>();
-        for (String destinationToken : destinationTokens) {
-            JsonMessage jsonMessage = new JsonMessage(createAllySuccessNotification(), destinationToken);
+        for (NameToken destinationNameToken : destinationNameTokens) {
+            JsonMessage jsonMessage = new JsonMessage(createAllySuccessNotification(destinationNameToken.getAllyName()),
+                    destinationNameToken.getToken());
             jsonMessages.add(jsonMessage);
         }
         return jsonMessages;
     }
 
-    private Notification createAllySuccessNotification() {
-        return new Notification("Ally connection successful", "You are now connected to a new person");
+    private Notification createAllySuccessNotification(String name) {
+        return new Notification("Ally connection successful", "You are now connected to " + name);
     }
 }
