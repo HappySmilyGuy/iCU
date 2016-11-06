@@ -49,10 +49,10 @@ public class AddAlly extends AppCompatActivity {
                         return;
                     }
 
-                    serverCaller.addAlly(username, userCode, allyCode);
+                    serverCaller.addAlly(username, allyName, userCode, allyCode);
                     Intent goToAlliesScreenPage = new Intent(getApplicationContext(), AlliesScreen.class);
                     startActivity(goToAlliesScreenPage);
-                    // TODO maybe should go to a new page that processes the new user, until the message is recieved, then moves to AlliesScreen
+                    // TODO maybe should go to a new page that processes the new user, until the message is received, then moves to AlliesScreen
                 }
             };
 

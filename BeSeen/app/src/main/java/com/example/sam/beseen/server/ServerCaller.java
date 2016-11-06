@@ -28,8 +28,8 @@ import java.util.List;
  * @since 22-10-16.
  */
 public final class ServerCaller {
-    private static final String SERVER = "http://ec2-35-161-96-38.us-west-2.compute.amazonaws.com/";
-    private static final String PORT = "80";
+    private static final String SERVER = "10.0.2.2";
+    private static final String PORT = "8080";
     private static final String RPC_CHANGE_STATE = "changeState";
     private static final String PARAM_EMAIL = "email";
     private static final String PARAM_STATE = "state";
@@ -40,6 +40,7 @@ public final class ServerCaller {
     private static final String RPC_ADD_ALLY = "addAlly";
     private static final String PARAM_MY_CODE = "myCode";
     private static final String PARAM_FRIEND_CODE = "allyCode";
+    private static final String PARAM_NAME = "name";
     private static final String RPC_UPDATE_TOKEN = "updateToken";
     private static final String RPC_ALLY_LIST = "getAllyList";
     private static final String RPC_LOGIN = "login";
@@ -102,7 +103,7 @@ public final class ServerCaller {
      */
     // TODO get to return if login is correct.
     public void checkLogin(final String email, final String passwordHash) {
-        new ObjectRetriever().execute(createURL(RPC_LOGIN,
+        new MessageServer().execute(createURL(RPC_LOGIN,
                 "?" + PARAM_EMAIL + "+" + "=" + email
                 + "&" + PARAM_PASSWORD + "=" + passwordHash));
     }
@@ -111,12 +112,13 @@ public final class ServerCaller {
      * Calls the add ally function on the server.
      *
      * @param email the email of the current user.
+     * @param name the name for the new ally.
      * @param myCode the generated code of the current user.
      * @param theirCode the generated code of the user they wish to add.
      */
-    public void addAlly(final String email, final String myCode, final String theirCode) {
+    public void addAlly(final String email, final String name, final String myCode, final String theirCode) {
         new MessageServer().execute(createURL(RPC_ADD_ALLY,
-                "?" + PARAM_EMAIL + "=" + email
+                "?" + PARAM_EMAIL + "=" + email + "&" + PARAM_NAME + "=" + name
                 + "&" + PARAM_MY_CODE + "=" + myCode.toUpperCase()
                 + "&" + PARAM_FRIEND_CODE + "=" + theirCode.toUpperCase()));
     }
@@ -149,7 +151,7 @@ public final class ServerCaller {
                             JSONObject jsonAlly = received.getJSONObject(i);
                             // TODO change to take the _id instead of the email
                             // TODO change to set the name as the name in local store, set when adding ally.
-                            Ally ally = new Ally(jsonAlly.getString("email"), TLState.valueOf(jsonAlly.getString("state")), "unset name");
+                            Ally ally = new Ally(jsonAlly.getString("email"), TLState.valueOf(jsonAlly.getString("state")), jsonAlly.getString("name"));
                             allies.add(ally);
                         }
                         alliesScreen.receiveAllyList(allies);

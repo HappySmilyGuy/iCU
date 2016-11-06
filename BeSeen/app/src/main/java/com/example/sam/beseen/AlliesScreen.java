@@ -37,6 +37,8 @@ public class AlliesScreen extends AppCompatActivity {
 
     private final ServerCaller serverCaller = ServerCaller.getInstance();
     private static List<Ally> allies = new ArrayList<>();
+    private LayoutInflater inflater;
+    private RelativeLayout parent;
 
     /**
      * A button listener to send user to the AddAlly activity.
@@ -55,19 +57,12 @@ public class AlliesScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allies_screen);
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        RelativeLayout parent = (RelativeLayout) inflater.inflate(R.layout.content_allies_screen,
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        parent = (RelativeLayout) inflater.inflate(R.layout.content_allies_screen,
                 null);
 
         serverCaller.getAllies(UserInfo.getUsername(getApplicationContext()), this);
 
-        // TODO to be replaced by information from the server
-        allies.add(new Ally("1", TLState.GREEN, "Tom"));
-        allies.add(new Ally("2", TLState.YELLOW, "Dick"));
-        allies.add(new Ally("3", TLState.RED, "Harry"));
-        allies.add(new Ally("4", TLState.UNSET, "Charles"));
-
-        displayAllies(parent, inflater);
         setContentView(parent);
 
         final ImageButton button = (ImageButton) findViewById(R.id.addAllyButton);
@@ -80,10 +75,10 @@ public class AlliesScreen extends AppCompatActivity {
      *
      * @param alliesFromServer the list of allies received from the server.
      * */
-    public static void receiveAllyList(final List<Ally> alliesFromServer) {
+    public void receiveAllyList(final List<Ally> alliesFromServer) {
         // do something with allies
         allies = alliesFromServer;
-        // TODO refresh screen.
+        displayAllies(parent, inflater);
     }
 
     /**
