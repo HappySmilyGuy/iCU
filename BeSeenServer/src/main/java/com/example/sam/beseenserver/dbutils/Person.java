@@ -12,6 +12,7 @@ public class Person {
 
     public Person(String email, String name, StateEnum state) {
         this.email = email;
+        this.name = name;
         this.state = state;
     }
 

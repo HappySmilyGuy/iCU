@@ -155,10 +155,10 @@ public class MongoDb {
     }
 
     private List<String> getAllyEmails(String email) {
-        List<BasicDBObject> allyList = getAllyObjects(email);
+        List<Document> allyList = getAllyObjects(email);
         List<String> allyEmails = new ArrayList<>();
         if (allyList != null) {
-            for (BasicDBObject ally : allyList) {
+            for (Document ally : allyList) {
                 String allyEmail = ally.getString(EMAIL_FIELD_NAME);
                 if (allyEmail != null && !allyEmail.isEmpty()) {
                     allyEmails.add(allyEmail);
@@ -169,10 +169,10 @@ public class MongoDb {
         return null;
     }
 
-    private List<BasicDBObject> getAllyObjects(String email) {
+    private List<Document> getAllyObjects(String email) {
         Document userDoc = getUserDocument(email);
         if (userDoc != null) {
-            return (List<BasicDBObject>) userDoc.get(ALLIES_FIELD_NAME);
+            return (List<Document>) userDoc.get(ALLIES_FIELD_NAME);
         }
         return null;
     }
@@ -188,8 +188,8 @@ public class MongoDb {
 
     public List<Person> getAllyList(String email) {
         List<Person> persons = new ArrayList<>();
-        List<BasicDBObject> allyList = getAllyObjects(email);
-        for (BasicDBObject allyObject : allyList) {
+        List<Document> allyList = getAllyObjects(email);
+        for (Document allyObject : allyList) {
             Document allyDoc = getUserDocument(allyObject.getString(EMAIL_FIELD_NAME));
             Person ally = new Person(allyObject.getString(EMAIL_FIELD_NAME), allyObject.getString(ALLY_NAME_FIELD_NAME),
                     StateEnum.valueOf((String)allyDoc.get(STATE_FIELD_NAME)));
