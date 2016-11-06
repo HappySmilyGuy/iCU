@@ -28,8 +28,8 @@ import java.util.List;
  * @since 22-10-16.
  */
 public final class ServerCaller {
-    private static final String SERVER = "10.0.2.2";
-    private static final String PORT = "8080";
+    private static final String SERVER = "http://ec2-35-161-96-38.us-west-2.compute.amazonaws.com/";
+    private static final String PORT = "80";
     private static final String RPC_CHANGE_STATE = "changeState";
     private static final String PARAM_EMAIL = "email";
     private static final String PARAM_STATE = "state";
