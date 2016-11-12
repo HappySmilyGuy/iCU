@@ -1,66 +1,67 @@
 package com.example.sam.beseen;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.ImageButton;
 
 import com.example.sam.beseen.dataobjects.TLState;
+import com.example.sam.beseen.dataobjects.UserInfo;
 import com.example.sam.beseen.server.ServerCaller;
 
 public class Status extends AppCompatActivity {
-    private static final String LOCAL_DATA = "LocalDataStore";
     private final ServerCaller serverCaller = ServerCaller.getInstance();
 
-    ImageButton.OnClickListener redLightButtonListener =
-            new ImageButton.OnClickListener(){
+    /** A button listener for the red light button. */
+    private ImageButton.OnClickListener redLightButtonListener =
+            new ImageButton.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     setLights(TLState.RED);
-                    SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
-                    String username = preferences.getString("username", null);
-                    serverCaller.changeState(username, TLState.RED);
-                    saveState(TLState.RED);
+                    serverCaller.changeState(UserInfo.getUsername(getApplicationContext()), TLState.RED);
+                    UserInfo.saveState(getApplicationContext(), TLState.RED);
                 }
             };
-    ImageButton.OnClickListener yellowLightButtonListener =
+    /** A button listener for the yellow light button. */
+    private ImageButton.OnClickListener yellowLightButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     setLights(TLState.YELLOW);
-                    SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
-                    String username = preferences.getString("username", null);
-                    serverCaller.changeState(username, TLState.YELLOW);
-                    saveState(TLState.YELLOW);
+                    serverCaller.changeState(UserInfo.getUsername(getApplicationContext()), TLState.YELLOW);
+                    UserInfo.saveState(getApplicationContext(), TLState.YELLOW);
                 }
             };
-
-    ImageButton.OnClickListener greenLightButtonListener =
+    /** A button listener for the green light button. */
+    private ImageButton.OnClickListener greenLightButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     setLights(TLState.GREEN);
-                    SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
-                    String username = preferences.getString("username", null);
-                    serverCaller.changeState(username, TLState.GREEN);
-                    saveState(TLState.GREEN);
+                    serverCaller.changeState(UserInfo.getUsername(getApplicationContext()), TLState.GREEN);
+                    UserInfo.saveState(getApplicationContext(), TLState.GREEN);
                 }
             };
-
-    ImageButton.OnClickListener nextPageButtonListener =
+    /** A button listener for the next page button. */
+    private ImageButton.OnClickListener nextPageButtonListener =
             new ImageButton.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     Intent goToAlliesScreenPage = new Intent(getApplicationContext(), AlliesScreen.class);
                     startActivity(goToAlliesScreenPage);
                 }
             };
 
-    public void setLights(TLState state) {
+    /**
+     * Sets the light images to all off except for the @state image, which is set to on.
+     *
+     * @param state the state to set the lights to display.
+     * */
+    public final void setLights(final TLState state) {
         ImageButton redLightButton = (ImageButton) findViewById(R.id.redLightButton);
         ImageButton yellowLightButton = (ImageButton) findViewById(R.id.yellowLightButton);
         ImageButton greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
@@ -85,13 +86,10 @@ public class Status extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences preferences = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE);
-        String username = preferences.getString("username", null);
-
-        if(username == null) {
+        if (UserInfo.getUsername(getApplicationContext()) == null) {
             Intent goToRegistrationPage = new Intent(getApplicationContext(), Registration.class);
             startActivity(goToRegistrationPage);
         }
@@ -107,25 +105,13 @@ public class Status extends AppCompatActivity {
 
             final ImageButton greenLightButton = (ImageButton) findViewById(R.id.greenLightButton);
             greenLightButton.setOnClickListener(greenLightButtonListener);
-        }
-        catch(NullPointerException e){
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
 
         final ImageButton button = (ImageButton) findViewById(R.id.nextPage);
         button.setOnClickListener(nextPageButtonListener);
 
-        String stateString =  preferences.getString("state", null);
-        if(stateString != null) {
-            setLights(TLState.valueOf(stateString));
-        }
-        else {
-            setLights(TLState.UNSET);
-        }
-    }
-
-    public void saveState(TLState state) {
-        SharedPreferences.Editor editor = getSharedPreferences(LOCAL_DATA, MODE_PRIVATE).edit();
-        editor.putString("state", state.toString());
-        editor.apply();
+        setLights(UserInfo.getState(getApplicationContext()));
     }
 }

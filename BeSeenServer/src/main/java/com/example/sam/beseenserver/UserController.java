@@ -1,11 +1,14 @@
 package com.example.sam.beseenserver;
 
+import com.example.sam.beseenserver.dbutils.Ally;
 import com.example.sam.beseenserver.dbutils.MongoDb;
+import com.example.sam.beseenserver.dbutils.NameToken;
 import com.example.sam.beseenserver.dbutils.Person;
 import com.example.sam.beseenserver.notificationutils.JsonMessage;
 import com.example.sam.beseenserver.notificationutils.Notification;
 import com.example.sam.beseenserver.notificationutils.NotificationCreator;
 import com.example.sam.beseenserver.notificationutils.NotificationService;
+import com.mongodb.BasicDBObject;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -53,15 +56,17 @@ public class UserController {
     }
 
     @RequestMapping("/addAlly")
-    public ResponseEntity<String> addAlly(@Email String email, String myCode, String allyCode) {
-        List<String> emailPair = mongoDb.addAlly(email, myCode, allyCode);
+    public ResponseEntity<String> addAlly(@Email String email, String name, String myCode, String allyCode) {
+        List<Ally> emailPair = mongoDb.addAlly(email, name, myCode, allyCode);
         if (!emailPair.isEmpty()) {
-            List<String> tokens = new ArrayList<>();
-            for (String emailFromPair : emailPair) {
-                String token = mongoDb.getToken(emailFromPair);
-                tokens.add(token);
+            List<NameToken> nameTokens = new ArrayList<>();
+            for (Ally nameEmailFromPair : emailPair) {
+                String token = mongoDb.getToken(nameEmailFromPair.getEmail());
+                String allyName = nameEmailFromPair.getName();
+                NameToken nameToken = new NameToken(allyName, token);
+                nameTokens.add(nameToken);
             }
-            notificationService.sendNotifications(notificationCreator.createAllySuccessMessages(tokens));
+            notificationService.sendNotifications(notificationCreator.createAllySuccessMessages(nameTokens));
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
